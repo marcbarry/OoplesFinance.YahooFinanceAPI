@@ -46,6 +46,15 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Generate version number
+        id: version
+        run: |
+          # Use date format: YYYY.MM.DD.RUN_NUMBER-local
+          DATE=$(date +'%Y.%m.%d')
+          VERSION="${DATE}.${{ github.run_number }}-local"
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Generated version: $VERSION"
+
       - name: Cache NuGet packages
         uses: actions/cache@v3
         with:
@@ -61,7 +70,12 @@ jobs:
         run: dotnet build -c Release --no-restore
 
       - name: Pack NuGet package
-        run: dotnet pack src/OoplesFinance.YahooFinanceAPI.csproj --configuration Release --output ./release
+        run: |
+          dotnet pack src/OoplesFinance.YahooFinanceAPI.csproj \
+            --configuration Release \
+            --output ./release \
+            -p:PackageVersion=${{ steps.version.outputs.VERSION }} \
+            -p:Version=${{ steps.version.outputs.VERSION }}
 
       - name: Collect build outputs
         run: |
