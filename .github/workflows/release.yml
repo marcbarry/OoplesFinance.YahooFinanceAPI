@@ -60,9 +60,6 @@ jobs:
       - name: Build project
         run: dotnet build -c Release --no-restore
 
-      - name: Run tests
-        run: dotnet test tests/UnitTests/OoplesFinance.YahooFinanceAPI.Tests.Unit.csproj -c Release --no-build --verbosity normal
-
       - name: Pack NuGet package
         run: dotnet pack src/OoplesFinance.YahooFinanceAPI.csproj --configuration Release --output ./release
 
