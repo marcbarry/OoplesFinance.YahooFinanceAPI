@@ -32,7 +32,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = async () => await _sut.GetHistoricalDataAsync(BadSymbol, DataFrequency.Daily, _startDate);
+        var result = async () => await _sut.GetHistoricalDataAsync(BadSymbol, TimeInterval._1Day, _startDate);
 
         // Assert
         await result.Should().ThrowAsync<InvalidOperationException>().WithMessage("Requested Information Not Available On Yahoo Finance");
@@ -44,7 +44,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = await _sut.GetHistoricalDataAsync(GoodSymbol, DataFrequency.Daily, _startDate);
+        var result = await _sut.GetHistoricalDataAsync(GoodSymbol, TimeInterval._1Day, _startDate);
 
         // Assert
         result.Should().NotBeNull();
@@ -56,7 +56,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = async () => await _sut.GetStockSplitDataAsync(BadSymbol, DataFrequency.Daily, _startDate);
+        var result = async () => await _sut.GetStockSplitDataAsync(BadSymbol, TimeInterval._1Day, _startDate);
 
         // Assert
         await result.Should().ThrowAsync<InvalidOperationException>().WithMessage("Requested Information Not Available On Yahoo Finance");
@@ -68,7 +68,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = await _sut.GetStockSplitDataAsync(GoodSymbol, DataFrequency.Daily, _startDate);
+        var result = await _sut.GetStockSplitDataAsync(GoodSymbol, TimeInterval._1Day, _startDate);
 
         // Assert
         result.Should().NotBeEmpty();
@@ -80,7 +80,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = async () => await _sut.GetDividendDataAsync(BadSymbol, DataFrequency.Daily, _startDate);
+        var result = async () => await _sut.GetDividendDataAsync(BadSymbol, TimeInterval._1Day, _startDate);
 
         // Assert
         await result.Should().ThrowAsync<InvalidOperationException>().WithMessage("Requested Information Not Available On Yahoo Finance");
@@ -92,7 +92,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = await _sut.GetDividendDataAsync(GoodSymbol, DataFrequency.Daily, _startDate);
+        var result = await _sut.GetDividendDataAsync(GoodSymbol, TimeInterval._1Day, _startDate);
 
         // Assert
         result.Should().NotBeEmpty();
@@ -104,7 +104,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = async () => await _sut.GetCapitalGainDataAsync(BadSymbol, DataFrequency.Daily, _startDate);
+        var result = async () => await _sut.GetCapitalGainDataAsync(BadSymbol, TimeInterval._1Day, _startDate);
 
         // Assert
         await result.Should().ThrowAsync<InvalidOperationException>().WithMessage("Requested Information Not Available On Yahoo Finance");
@@ -116,7 +116,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = async () => await _sut.GetCapitalGainDataAsync(string.Empty, DataFrequency.Daily, _startDate);
+        var result = async () => await _sut.GetCapitalGainDataAsync(string.Empty, TimeInterval._1Day, _startDate);
 
         // Assert
         await result.Should().ThrowAsync<ArgumentException>().WithMessage("Symbol Parameter Can't Be Empty Or Null");
@@ -128,7 +128,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = await _sut.GetCapitalGainDataAsync(GoodSymbol, DataFrequency.Daily, _startDate);
+        var result = await _sut.GetCapitalGainDataAsync(GoodSymbol, TimeInterval._1Day, _startDate);
 
         // Assert
         result.Should().NotBeEmpty();
@@ -140,7 +140,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = async () => await _sut.GetHistoricalDataAsync(string.Empty, DataFrequency.Daily, _startDate);
+        var result = async () => await _sut.GetHistoricalDataAsync(string.Empty, TimeInterval._1Day, _startDate);
 
         // Assert
         await result.Should().ThrowAsync<ArgumentException>().WithMessage("Symbol Parameter Can't Be Empty Or Null");
@@ -152,7 +152,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = async () => await _sut.GetDividendDataAsync(string.Empty, DataFrequency.Daily, _startDate);
+        var result = async () => await _sut.GetDividendDataAsync(string.Empty, TimeInterval._1Day, _startDate);
 
         // Assert
         await result.Should().ThrowAsync<ArgumentException>().WithMessage("Symbol Parameter Can't Be Empty Or Null");
@@ -164,7 +164,7 @@ public sealed class YahooClientTests
         // Arrange
 
         // Act
-        var result = async () => await _sut.GetStockSplitDataAsync(string.Empty, DataFrequency.Daily, _startDate);
+        var result = async () => await _sut.GetStockSplitDataAsync(string.Empty, TimeInterval._1Day, _startDate);
 
         // Assert
         await result.Should().ThrowAsync<ArgumentException>().WithMessage("Symbol Parameter Can't Be Empty Or Null");
@@ -1344,42 +1344,6 @@ public sealed class YahooClientTests
 
         // Assert
         result.Should().NotBeEmpty();
-    }
-
-    [Fact]
-    public async Task GetChartInfo_ThrowsException_WhenNoSymbolIsFound()
-    {
-        // Arrange
-
-        // Act
-        var result = async () => await _sut.GetChartInfoAsync(BadSymbol, TimeRange._1Day, TimeInterval._1Minute);
-
-        // Assert
-        await result.Should().ThrowAsync<InvalidOperationException>().WithMessage("Requested Information Not Available On Yahoo Finance");
-    }
-
-    [Fact]
-    public async Task GetChartInfo_ThrowsException_WhenEmptySymbolIsUsed()
-    {
-        // Arrange
-
-        // Act
-        var result = async () => await _sut.GetChartInfoAsync(string.Empty, TimeRange._1Day, TimeInterval._1Minute);
-
-        // Assert
-        await result.Should().ThrowAsync<ArgumentException>().WithMessage("Symbol Parameter Can't Be Empty Or Null");
-    }
-
-    [Fact]
-    public async Task GetChartInfo_ReturnsData_WhenValidSymbolIsUsed()
-    {
-        // Arrange
-
-        // Act
-        var result = await _sut.GetChartInfoAsync(GoodSymbol, TimeRange._1Day, TimeInterval._1Minute);
-
-        // Assert
-        result.Should().NotBeNull();
     }
 
     [Fact]

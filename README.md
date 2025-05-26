@@ -67,7 +67,6 @@ var netSharePurchaseActivityList = await yahooClient.GetNetSharePurchaseActivity
 var incomeStatementHistoryQuarterlyList = await yahooClient.GetIncomeStatementHistoryQuarterlyAsync(symbol);
 var cashflowStatementHistoryQuarterlyList = await yahooClient.GetCashflowStatementHistoryQuarterlyAsync(symbol);
 var balanceSheetHistoryQuarterlyList = await yahooClient.GetBalanceSheetHistoryQuarterlyAsync(symbol);
-var chartInfoList = await yahooClient.GetChartInfoAsync("GOOG", TimeRange._1Year, TimeInterval._1Day);
 var sparkChartInfoList = await yahooClient.GetSparkChartInfoAsync(symbols, TimeRange._1Month, TimeInterval._1Day);
 var realTimeQuoteList = await yahooClient.GetRealTimeQuotesAsync(symbols);
 var marketSummaryList = await yahooClient.GetMarketSummaryAsync();

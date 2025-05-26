@@ -18,220 +18,210 @@ public class YahooClient
     /// Gets a list of all Historical Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<HistoricalChartInfo>> GetHistoricalDataAsync(string symbol, DataFrequency dataFrequency, DateTime startDate)
+    public async Task<IEnumerable<HistoricalChartInfo>> GetHistoricalDataAsync(string symbol, TimeInterval granularity, DateTime startDate)
     {
         return new HistoricalHelper().ParseYahooJsonData<HistoricalChartInfo>(
-            await DownloadRawCsvDataAsync(symbol, DataType.HistoricalPrices, dataFrequency, startDate, null, true));
+            await DownloadChartDataAsync(symbol, DataType.HistoricalPrices, granularity, startDate, null, true));
     }
 
     /// <summary>
     /// Gets a list of all Historical Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<HistoricalChartInfo>> GetHistoricalDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate)
+    public async Task<IEnumerable<HistoricalChartInfo>> GetHistoricalDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate)
     {
         return new HistoricalHelper().ParseYahooJsonData<HistoricalChartInfo>(
-            await DownloadRawCsvDataAsync(symbol, DataType.HistoricalPrices, dataFrequency, startDate, endDate, true));
+            await DownloadChartDataAsync(symbol, DataType.HistoricalPrices, granularity, startDate, endDate, true));
     }
 
     /// <summary>
     /// Gets a list of all Historical Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <param name="includeAdjustedClose"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<HistoricalChartInfo>> GetHistoricalDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
+    public async Task<IEnumerable<HistoricalChartInfo>> GetHistoricalDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
     {
         return new HistoricalHelper().ParseYahooJsonData<HistoricalChartInfo>(
-            await DownloadRawCsvDataAsync(symbol, DataType.HistoricalPrices, dataFrequency, startDate, endDate, includeAdjustedClose));
+            await DownloadChartDataAsync(symbol, DataType.HistoricalPrices, granularity, startDate, endDate, includeAdjustedClose));
     }
     
     /// <summary>
     /// Gets a list of all Historical Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <returns></returns>
-    public async Task<HistoricalFullData> GetAllHistoricalDataAsync(string symbol, DataFrequency dataFrequency, DateTime startDate)
+    public async Task<HistoricalFullData> GetAllHistoricalDataAsync(string symbol, TimeInterval granularity, DateTime startDate)
     {
         return new AllHistoricalHelper().ParseYahooJsonData<HistoricalFullData>(
-            await DownloadRawCsvDataAsync(symbol, DataType.All, dataFrequency, startDate, null, true));
+            await DownloadChartDataAsync(symbol, DataType.All, granularity, startDate, null, true));
     }
     
     /// <summary>
     /// Gets a list of all Historical Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <returns></returns>
-    public async Task<HistoricalFullData> GetAllHistoricalDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate)
+    public async Task<HistoricalFullData> GetAllHistoricalDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate)
     {
         return new AllHistoricalHelper().ParseYahooJsonData<HistoricalFullData>(
-            await DownloadRawCsvDataAsync(symbol, DataType.All, dataFrequency, startDate, endDate, true));
+            await DownloadChartDataAsync(symbol, DataType.All, granularity, startDate, endDate, true));
     }
     
     /// <summary>
     /// Gets a list of all Historical Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <param name="includeAdjustedClose"></param>
     /// <returns></returns>
-    public async Task<HistoricalFullData> GetAllHistoricalDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
+    public async Task<HistoricalFullData> GetAllHistoricalDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
     {
         return new AllHistoricalHelper().ParseYahooJsonData<HistoricalFullData>(
-            await DownloadRawCsvDataAsync(symbol, DataType.All, dataFrequency, startDate, endDate, includeAdjustedClose));
+            await DownloadChartDataAsync(symbol, DataType.All, granularity, startDate, endDate, includeAdjustedClose));
     }
 
     /// <summary>
     /// Gets a list of all Dividend Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<DividendResult>> GetDividendDataAsync(string symbol, DataFrequency dataFrequency, DateTime startDate)
+    public async Task<IEnumerable<DividendResult>> GetDividendDataAsync(string symbol, TimeInterval granularity, DateTime startDate)
     {
         return new DividendHelper().ParseYahooJsonData<DividendResult>(
-            await DownloadRawCsvDataAsync(symbol, DataType.Dividends, dataFrequency, startDate, null, true));
+            await DownloadChartDataAsync(symbol, DataType.Dividends, granularity, startDate, null, true));
     }
 
     /// <summary>
     /// Gets a list of all Dividend Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<DividendResult>> GetDividendDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate)
+    public async Task<IEnumerable<DividendResult>> GetDividendDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate)
     {
         return new DividendHelper().ParseYahooJsonData<DividendResult>(
-            await DownloadRawCsvDataAsync(symbol, DataType.Dividends, dataFrequency, startDate, endDate, true));
+            await DownloadChartDataAsync(symbol, DataType.Dividends, granularity, startDate, endDate, true));
     }
 
     /// <summary>
     /// Gets a list of all Dividend Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <param name="includeAdjustedClose"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<DividendResult>> GetDividendDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
+    public async Task<IEnumerable<DividendResult>> GetDividendDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
     {
         return new DividendHelper().ParseYahooJsonData<DividendResult>(
-            await DownloadRawCsvDataAsync(symbol, DataType.Dividends, dataFrequency, startDate, endDate, includeAdjustedClose));
+            await DownloadChartDataAsync(symbol, DataType.Dividends, granularity, startDate, endDate, includeAdjustedClose));
     }
 
     /// <summary>
     /// Gets a list of all Stock Split Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<StockSplitResult>> GetStockSplitDataAsync(string symbol, DataFrequency dataFrequency, DateTime startDate)
+    public async Task<IEnumerable<StockSplitResult>> GetStockSplitDataAsync(string symbol, TimeInterval granularity, DateTime startDate)
     {
         return new StockSplitHelper().ParseYahooJsonData<StockSplitResult>(
-            await DownloadRawCsvDataAsync(symbol, DataType.StockSplits, dataFrequency, startDate, null, true));
+            await DownloadChartDataAsync(symbol, DataType.StockSplits, granularity, startDate, null, true));
     }
 
     /// <summary>
     /// Gets a list of all Stock Split Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<StockSplitResult>> GetStockSplitDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate)
+    public async Task<IEnumerable<StockSplitResult>> GetStockSplitDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate)
     {
         return new StockSplitHelper().ParseYahooJsonData<StockSplitResult>(
-            await DownloadRawCsvDataAsync(symbol, DataType.StockSplits, dataFrequency, startDate, endDate, true));
+            await DownloadChartDataAsync(symbol, DataType.StockSplits, granularity, startDate, endDate, true));
     }
 
     /// <summary>
     /// Gets a list of all Stock Split Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <param name="includeAdjustedClose"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<StockSplitResult>> GetStockSplitDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
+    public async Task<IEnumerable<StockSplitResult>> GetStockSplitDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
     {
         return new StockSplitHelper().ParseYahooJsonData<StockSplitResult>(
-            await DownloadRawCsvDataAsync(symbol, DataType.StockSplits, dataFrequency, startDate, endDate, includeAdjustedClose));
+            await DownloadChartDataAsync(symbol, DataType.StockSplits, granularity, startDate, endDate, includeAdjustedClose));
     }
 
     /// <summary>
     /// Gets a list of all Capital Gain Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Result>> GetCapitalGainDataAsync(string symbol, DataFrequency dataFrequency, DateTime startDate)
+    public async Task<IEnumerable<Result>> GetCapitalGainDataAsync(string symbol, TimeInterval granularity, DateTime startDate)
     {
         return new CapitalGainHelper().ParseYahooJsonData<Result>(
-            await DownloadRawCsvDataAsync(symbol, DataType.CapitalGains, dataFrequency, startDate, null, true));
+            await DownloadChartDataAsync(symbol, DataType.CapitalGains, granularity, startDate, null, true));
     }
 
     /// <summary>
     /// Gets a list of all Capital Gain Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Result>> GetCapitalGainDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate)
+    public async Task<IEnumerable<Result>> GetCapitalGainDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate)
     {
         return new CapitalGainHelper().ParseYahooJsonData<Result>(
-            await DownloadRawCsvDataAsync(symbol, DataType.CapitalGains, dataFrequency, startDate, endDate, true));
+            await DownloadChartDataAsync(symbol, DataType.CapitalGains, granularity, startDate, endDate, true));
     }
 
     /// <summary>
     /// Gets a list of all Capital Gain Data for the selected stock symbol and parameter options.
     /// </summary>
     /// <param name="symbol"></param>
-    /// <param name="dataFrequency"></param>
+    /// <param name="granularity"></param>
     /// <param name="startDate"></param>
     /// <param name="endDate"></param>
     /// <param name="includeAdjustedClose"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<Result>> GetCapitalGainDataAsync(string symbol, DataFrequency dataFrequency,
-        DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
+    public async Task<IEnumerable<Result>> GetCapitalGainDataAsync(string symbol, TimeInterval granularity, DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
     {
         return new CapitalGainHelper().ParseYahooJsonData<Result>(
-            await DownloadRawCsvDataAsync(symbol, DataType.CapitalGains, dataFrequency, startDate, endDate, includeAdjustedClose));
+            await DownloadChartDataAsync(symbol, DataType.CapitalGains, granularity, startDate, endDate, includeAdjustedClose));
     }
 
     /// <summary>
@@ -572,18 +562,6 @@ public class YahooClient
     {
         return new BalanceSheetHistoryQuarterlyHelper().ParseYahooJsonData<BalanceSheetStatement>(
             await DownloadStatsDataAsync(symbol, Country, Language, YahooModule.BalanceSheetHistoryQuarterly));
-    }
-
-    /// <summary>
-    /// Gets chart info data for the selected stock symbol
-    /// </summary>
-    /// <param name="symbol"></param>
-    /// <param name="timeRange"></param>
-    /// <param name="timeInterval"></param>
-    /// <returns></returns>
-    public async Task<ChartInfo> GetChartInfoAsync(string symbol, TimeRange timeRange, TimeInterval timeInterval)
-    {
-        return new ChartHelper().ParseYahooJsonData<ChartInfo>(await DownloadChartDataAsync(symbol, timeRange, timeInterval)).First();
     }
 
     /// <summary>

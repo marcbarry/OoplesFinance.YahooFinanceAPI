@@ -2,6 +2,8 @@
 
 internal static class UrlHelper
 {
+    const string queryHost1 = "query1.finance.yahoo.com";
+    const string queryHost2 = "query2.finance.yahoo.com";
 
     /// <summary>
     /// Creates a url that will be used to compile the chosen parameter options into a csv file.
@@ -13,9 +15,9 @@ internal static class UrlHelper
     /// <param name="endDate"></param>
     /// <param name="includeAdjClose"></param>
     /// <returns></returns>
-    internal static string BuildYahooCsvUrl(string symbol, DataType dataType, DataFrequency dataFrequency, DateTime startDate, DateTime? endDate, bool includeAdjClose) => 
-        string.Format(CultureInfo.InvariantCulture, $"https://query2.finance.yahoo.com/v8/finance/chart/{symbol}?period1={startDate.ToUnixTimestamp()}" +
-            $"&period2={(endDate ?? DateTime.Now).ToUnixTimestamp()}&interval={GetFrequencyString(dataFrequency)}&events={GetEventsString(dataType)}" +
+    internal static string BuildYahooChartUrl(string symbol, DataType dataType, TimeInterval granularity, DateTime startDate, DateTime? endDate, bool includeAdjClose) => 
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost2}/v8/finance/chart/{symbol}?period1={startDate.ToUnixTimestamp()}" +
+            $"&period2={(endDate ?? DateTime.Now).ToUnixTimestamp()}&interval={GetTimeIntervalString(granularity)}&events={GetEventsString(dataType)}" +
             $"&includeAdjustedClose={includeAdjClose}");
 
     /// <summary>
@@ -25,7 +27,7 @@ internal static class UrlHelper
     /// <param name="count"></param>
     /// <returns></returns>
     internal static string BuildYahooTrendingUrl(Country country, int count) => 
-        string.Format(CultureInfo.InvariantCulture, $"https://query2.finance.yahoo.com/v1/finance/trending/{GetCountryString(country)}?count={count}");
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost2}/v1/finance/trending/{GetCountryString(country)}?count={count}");
 
     /// <summary>
     /// Creates a url that will be used to get the screener list using the chosen parameters
@@ -34,7 +36,7 @@ internal static class UrlHelper
     /// <param name="count"></param>
     /// <returns></returns>
     internal static string BuildYahooScreenerUrl(ScreenerType screenerType, int count) =>
-        string.Format(CultureInfo.InvariantCulture, $"https://query1.finance.yahoo.com/ws/screeners/v1/finance/screener/predefined/saved?" +
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost1}/ws/screeners/v1/finance/screener/predefined/saved?" +
             $"count={count}&scrIds={GetScreenerString(screenerType)}");
 
     /// <summary>
@@ -43,7 +45,7 @@ internal static class UrlHelper
     /// <param name="symbol"></param>
     /// <returns></returns>
     internal static string BuildYahooRecommendUrl(string symbol) =>
-        string.Format(CultureInfo.InvariantCulture, $"https://query2.finance.yahoo.com/v6/finance/recommendationsbysymbol/{symbol}");
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost2}/v6/finance/recommendationsbysymbol/{symbol}");
 
     /// <summary>
     /// Creates a url that will be used to get insights for a selected symbol
@@ -51,7 +53,7 @@ internal static class UrlHelper
     /// <param name="symbol"></param>
     /// <returns></returns>
     internal static string BuildYahooInsightsUrl(string symbol) =>
-        string.Format(CultureInfo.InvariantCulture, $"https://query1.finance.yahoo.com/ws/insights/v1/finance/insights?symbol={symbol}");
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost1}/ws/insights/v1/finance/insights?symbol={symbol}");
 
     /// <summary>
     /// Creates a url that will be used to get the market summary
@@ -60,7 +62,7 @@ internal static class UrlHelper
     /// <param name="language"></param>
     /// <returns></returns>
     internal static string BuildYahooMarketSummaryUrl(Country country, Language language) =>
-        string.Format(CultureInfo.InvariantCulture, $"https://query1.finance.yahoo.com/v6/finance/quote/marketSummary?" +
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost1}/v6/finance/quote/marketSummary?" +
             $"lang={GetLanguageString(language)}&region={GetCountryString(country)}");
 
     /// <summary>
@@ -71,7 +73,7 @@ internal static class UrlHelper
     /// <param name="language"></param>
     /// <returns></returns>
     internal static string BuildYahooAutoCompleteUrl(string searchTerm, Country country, Language language) =>
-        string.Format(CultureInfo.InvariantCulture, $"https://query1.finance.yahoo.com/v6/finance/autocomplete?region=" +
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost1}/v6/finance/autocomplete?region=" +
             $"{GetCountryString(country)}&lang={GetLanguageString(language)}&query={searchTerm}");
 
     /// <summary>
@@ -80,7 +82,7 @@ internal static class UrlHelper
     /// <param name="symbol"></param>
     /// <returns></returns>
     internal static string BuildYahooChartUrl(string symbol, TimeRange timeRange, TimeInterval timeInterval) =>
-        string.Format(CultureInfo.InvariantCulture, $"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?" +
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost1}/v8/finance/chart/{symbol}?" +
             $"range={GetTimeRangeString(timeRange)}&interval={GetTimeIntervalString(timeInterval)}");
 
     /// <summary>
@@ -91,7 +93,7 @@ internal static class UrlHelper
     /// <param name="timeInterval"></param>
     /// <returns></returns>
     internal static string BuildYahooSparkChartUrl(IEnumerable<string> symbols, TimeRange timeRange, TimeInterval timeInterval) =>
-        string.Format(CultureInfo.InvariantCulture, $"https://query2.finance.yahoo.com/v8/finance/spark?interval=" +
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost2}/v8/finance/spark?interval=" +
             $"{GetTimeIntervalString(timeInterval)}&range={GetTimeRangeString(timeRange)}&symbols={GetSymbolsString(symbols)}");
 
     /// <summary>
@@ -103,7 +105,7 @@ internal static class UrlHelper
     /// <param name="module"></param>
     /// <returns></returns>
     internal static async Task<string> BuildYahooStatsUrl(string symbol, Country country, Language language, YahooModule module) =>
-        string.Format(CultureInfo.InvariantCulture, $"https://query2.finance.yahoo.com/v10/finance/quoteSummary/{symbol}" +
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost2}/v10/finance/quoteSummary/{symbol}" +
             $"?crumb={(await CrumbHelper.GetInstance()).Crumb}&lang={GetLanguageString(language)}&region={GetCountryString(country)}&modules={GetModuleString(module)}");
 
     /// <summary>
@@ -114,7 +116,7 @@ internal static class UrlHelper
     /// <param name="language"></param>
     /// <returns></returns>
     internal static async Task<string> BuildYahooRealTimeQuoteUrl(IEnumerable<string> symbols, Country country, Language language) =>
-        string.Format(CultureInfo.InvariantCulture, $"https://query2.finance.yahoo.com/v7/finance/quote?region=" +
+        string.Format(CultureInfo.InvariantCulture, $"https://{queryHost2}/v7/finance/quote?region=" +
             $"{GetCountryString(country)}&lang={GetLanguageString(language)}&symbols={GetSymbolsString(symbols)}&crumb={(await CrumbHelper.GetInstance()).Crumb}");
 
     /// <summary>

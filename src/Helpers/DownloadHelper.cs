@@ -3,7 +3,7 @@ namespace OoplesFinance.YahooFinanceAPI.Helpers;
 internal static class DownloadHelper
 {
     /// <summary>
-    /// Downloads the raw csv data using the chosen parameters
+    /// Downloads the chart json data using the chosen symbol
     /// </summary>
     /// <param name="symbol"></param>
     /// <param name="dataType"></param>
@@ -13,7 +13,7 @@ internal static class DownloadHelper
     /// <param name="includeAdjustedClose"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentException"></exception>
-    internal static async Task<string> DownloadRawCsvDataAsync(string symbol, DataType dataType, DataFrequency dataFrequency,
+    internal static async Task<string> DownloadChartDataAsync(string symbol, DataType dataType, TimeInterval granularity,
         DateTime startDate, DateTime? endDate, bool includeAdjustedClose)
     {
         if (string.IsNullOrWhiteSpace(symbol))
@@ -22,7 +22,7 @@ internal static class DownloadHelper
         }
         else
         {
-            return await DownloadRawDataAsync(BuildYahooCsvUrl(symbol, dataType, dataFrequency, startDate, endDate, includeAdjustedClose));
+            return await DownloadRawDataAsync(BuildYahooChartUrl(symbol, dataType, granularity, startDate, endDate, includeAdjustedClose));
         }
     }
 
@@ -138,26 +138,6 @@ internal static class DownloadHelper
         else
         {
             return await DownloadRawDataAsync(BuildYahooInsightsUrl(symbol));
-        }
-    }
-
-    /// <summary>
-    /// Downloads the chart json data using the chosen symbol
-    /// </summary>
-    /// <param name="symbol"></param>
-    /// <param name="timeRange"></param>
-    /// <param name="timeInterval"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    internal static async Task<string> DownloadChartDataAsync(string symbol, TimeRange timeRange, TimeInterval timeInterval)
-    {
-        if (string.IsNullOrWhiteSpace(symbol))
-        {
-            throw new ArgumentException("Symbol Parameter Can't Be Empty Or Null");
-        }
-        else
-        {
-            return await DownloadRawDataAsync(BuildYahooChartUrl(symbol, timeRange, timeInterval));
         }
     }
 
