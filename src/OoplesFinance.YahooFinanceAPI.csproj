@@ -27,11 +27,6 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <SignAssembly>False</SignAssembly>
     <DelaySign>True</DelaySign>
-
-    <PublishTrimmed>true</PublishTrimmed>
-    <PublishSingleFile>true</PublishSingleFile>
-    <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">

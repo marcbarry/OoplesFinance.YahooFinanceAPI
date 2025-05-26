@@ -58,10 +58,13 @@ jobs:
         run: dotnet restore src/OoplesFinance.YahooFinanceAPI.csproj
 
       - name: Build project
-        run: dotnet publish src/OoplesFinance.YahooFinanceAPI.csproj -c Release -o release
+        run: dotnet build -c Release --no-restore
 
       - name: Run tests
         run: dotnet test tests/UnitTests/OoplesFinance.YahooFinanceAPI.Tests.Unit.csproj -c Release --no-build --verbosity normal
+
+      - name: Pack NuGet package
+        run: dotnet pack src/OoplesFinance.YahooFinanceAPI.csproj --configuration Release --output ./release
 
       - name: Collect build outputs
         run: |
